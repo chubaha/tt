@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+<div class="row">
+<form id="form-search-first" method="GET" action="/search/">
+        <input autocomplete = "off" id="search-first" width="15px" name="search" type="text" placeholder="поиск...">
+        <input id="button-search-first" type="submit" class="btn" value="Найти">
+    </form>
+    <table class="table table-hover table-inverse">
+        <thead>
+            <tr>
+              <th>№</th>
+              <th>ФИО<a href="{% url 'all-list' %}?sort_param=name">&uarr;</a><a href="{% url 'all-list' %}?sort_param=-name">&darr;</a></th>
+              <th>Должность<a href="{% url 'all-list' %}?sort_param=position">&uarr;</a><a href="{% url 'all-list' %}?sort_param=-position">&darr;</a></th>
+              <th>Дата приема на работу<a href="{% url 'all-list' %}?sort_param=date_begin">&uarr;</a><a href="{% url 'all-list' %}?sort_param=-date_begin">&darr;</a></th>
+              <th>Зарплата<a href="{% url 'all-list' %}?sort_param=salary">&uarr;</a><a href="{% url 'all-list' %}?sort_param=-salary">&darr;</a></th>
+            </tr>
+      </thead>
+        <tbody>
+            {% for item in all_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.position }}</td>
+                    <td>{{ item.date_begin|date:"d-m-Y" }}</td>
+                    <td>{{ item.salary }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

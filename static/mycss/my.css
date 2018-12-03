@@ -1,0 +1,11 @@
+.avatar{
+    width: 30px;
+}
+
+.tree-first{
+    display: none;
+}
+
+#tree-head > li{
+    display: block;
+}

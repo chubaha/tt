@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+    <div class="container">
+        <p><a class="text-info" href="{% url 'all-list' %}">Полный список сотрудников (поиск и сортировка с перезагрузкой страницы)</a></p>
+        <p><a class="text-info" href="{% url 'all-list-ajax' %}">Полный список сотрудников (поиск и сортировка спомощью ajax)</a></p>
+        <p><a class="text-info" href="{% url 'privat-page' %}">Раздел для зарегистрированных пользователей</a></p>
+		<div class="row">
+            <ul id="tree-head" class="list-group">
+                {% recursetree emp %}
+                    <li data-child={{ node.level }} class="list-group-item list-group-item-action tree-first">
+                        {{ node.name }}, {{ node.position }} <img class="avatar" src="{% if node.photo %}{{ node.photo.url }}{% endif %}">
+                        {% if not node.is_leaf_node %}
+                            <ul id="tree-child" class="tree-hidden">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
+        </div>
+	</div>
+{% endblock %}

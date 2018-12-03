@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+<div class="row">
+<h2 class="card-title">Результаты поиска</h2>
+    <table class="table table-hover table-inverse">
+        <thead>
+            <tr>
+              <th>№</th>
+              <th>ФИО</th>
+              <th>Должность</th>
+              <th>Дата приема на работу</th>
+              <th>Зарплата</th>
+            </tr>
+      </thead>
+        <tbody>
+            {% for item in all_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.position }}</td>
+                    <td>{{ item.date_begin|date:"d-m-Y" }}</td>
+                    <td>{{ item.salary }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

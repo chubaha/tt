@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+    <div class="container">
+    <form id="form-search" method="POST" action="">{% csrf_token %}
+        <input autocomplete = "off" id="search" width="15px" name="search" type="text" placeholder="поиск...">
+        <input id="button-search" type="submit" class="btn" value="Найти">
+    </form>
+		<div class="row">
+            {% if request.user.is_authenticated %}
+                <em>Привет, {{ user.username }}. <a href="/logout/" name="logout">Выйти</a></em>&nbsp;
+                <a class="btn-primary" href="{% url 'create' %}">Создать нового сотрудника</a>
+                <table id="list-table" class="table table-hover table-inverse">
+                    <thead>
+                        <tr>
+                          <th>№</th>
+                          <th>ФИО<a data-sort="name" class="sort-arrow-ajax" href="#">&uarr;</a><a data-sort="-name" class="sort-arrow-ajax" href="#">&darr;</a></th>
+                          <th>Должность<a data-sort="position" class="sort-arrow-ajax" href="#">&uarr;</a><a data-sort="-position" class="sort-arrow-ajax" href="#">&darr;</a></th>
+                          <th>Дата приема на работу<a data-sort="date_begin" class="sort-arrow-ajax" href="#">&uarr;</a><a data-sort="-date_begin" class="sort-arrow-ajax" href="#">&darr;</a></th>
+                          <th>Зарплата<a data-sort="salary" class="sort-arrow-ajax" href="#">&uarr;</a><a data-sort="-salary" class="sort-arrow-ajax" href="#">&darr;</a></th>
+                          <th>Фото сотрудника</th>
+                          <th>Редактирование</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        {% for item in all_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.position }}</td>
+                                <td>{{ item.date_begin|date:"d-m-Y" }}</td>
+                                <td>{{ item.salary }}</td>
+                                <td align="center" class="td-avatar"><img class="avatar" src="{% if item.photo %}{{ item.photo.url }}{% endif %}"></td>
+                                <td><a onclick="return confirm('Вы действительно хотите удалить запись?')" href="{% url 'delete' item.id %}">del</a>|<a href="{% url 'edit' item.id %}" class='edit-person'>edit</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <em>Привет, гость. <a href="/login/" name="login">Войти</a></em>
+                <p>Эта страница доступна только для зарегистрированных пользователей. Чтобы посмотреть содержимое, воспользуйтель формой для авторизации</p>
+                <form method="post" action="/login/">{% csrf_token %}
+                    <p>{{ form_auth.username_auth.label }}{{ form_auth.username_auth }}</p>
+                    <p>{{ form_auth.password_auth.label }}{{ form_auth.password_auth }}</p>
+                    <button name="btn_login" class="btn btn-primary" type="submit">Войти</button>
+                </form>
+            {% endif %}
+        </div>
+	</div>
+{% endblock %}
