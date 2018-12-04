@@ -76,20 +76,6 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    $('.edit-person').click(function(){
-        $('.edit-form').removeClass('edit-form-hidden');
-        $('.edit-form').addClass('edit-form-visible');
-    });
-});
-
-
-$(document).ready(function() {
-    $('.close-button').click(function(){
-        $('.edit-form').removeClass('edit-form-visible');
-        $('.edit-form').addClass('edit-form-hidden');
-    });
-});
 
 $(document).ready(function() {
     $('.tree-first').click(function(){
